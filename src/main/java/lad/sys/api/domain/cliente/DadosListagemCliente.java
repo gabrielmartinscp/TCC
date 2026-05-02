@@ -1,4 +1,4 @@
-package lad.sys.api.cliente;
+package lad.sys.api.domain.cliente;
 
 public record DadosListagemCliente(Long id, String nome, String email, String telefone) {
 
