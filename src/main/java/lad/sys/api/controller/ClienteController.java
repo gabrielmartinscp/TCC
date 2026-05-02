@@ -1,31 +1,57 @@
 package lad.sys.api.controller;
 
-import lad.sys.api.cliente.Cliente;
-import lad.sys.api.cliente.ClienteRepository;
-import lad.sys.api.cliente.DadosCadastroCliente;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import lad.sys.api.cliente.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteRepository repository;
 
     @GetMapping
-    public String get() {
-        return "GET Cliente";
+    public Page<DadosListagemCliente> listar(@PageableDefault(size = 5, sort = {"nome"}) Pageable pageable) {
+        return repository.findAllByDeletadoFalse(pageable).map(DadosListagemCliente::new);
+    }
+
+    @GetMapping
+    @RequestMapping("/nomes")
+    public Page<DadosListagemClienteNome> listarnomes(Pageable pageable) {
+        return repository.findAllByDeletadoFalse(pageable).map(DadosListagemClienteNome::new);
     }
 
     @PostMapping
-    public String post(@RequestBody DadosCadastroCliente dados) {
-        clienteRepository.save(new Cliente(dados));
-        return "POST Cliente";
+    @Transactional
+    public void post(@RequestBody @Valid DadosCadastroCliente dados) {
+        repository.save(new Cliente(dados));
     }
 
     @PutMapping
-    public String put() {
-        return "PUT Cliente";
+    @Transactional
+    public void put(@RequestBody @Valid DadosAtualizacaoCliente dados) {
+        var cliente = repository.getReferenceById(dados.id());
+        cliente.atualizarRegistro(dados);
+    }
+
+    @GetMapping("/{id}")
+    public DadosCliente getById(@PathVariable Long id){
+        Cliente cliente = repository.getReferenceByIdAndDeletadoFalse(id);
+        return new DadosCliente(cliente.getNome(), cliente.getEmail(), cliente.getTelefone());
+    }
+
+    @DeleteMapping
+    @Transactional
+    public void deleteById(@RequestBody @Valid DadosAtualizacaoCliente dados) {
+        Cliente cliente = repository.getReferenceById(dados.id());
+        cliente.deletarCliente();
     }
 }
