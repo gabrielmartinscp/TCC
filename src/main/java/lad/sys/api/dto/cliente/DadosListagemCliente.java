@@ -1,4 +1,6 @@
-package lad.sys.api.domain.cliente;
+package lad.sys.api.dto.cliente;
+
+import lad.sys.api.model.Cliente;
 
 public record DadosListagemCliente(Long id, String nome, String email, String telefone) {
 

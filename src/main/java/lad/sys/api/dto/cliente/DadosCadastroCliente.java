@@ -1,4 +1,4 @@
-package lad.sys.api.domain.cliente;
+package lad.sys.api.dto.cliente;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

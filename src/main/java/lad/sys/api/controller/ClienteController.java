@@ -2,7 +2,9 @@ package lad.sys.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import lad.sys.api.domain.cliente.*;
+import lad.sys.api.dto.cliente.*;
+import lad.sys.api.model.Cliente;
+import lad.sys.api.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,6 @@
-package lad.sys.api.domain.usuario;
+package lad.sys.api.dto.usuario;
+
+import lad.sys.api.model.Usuario;
 
 public record DadosUsuario(Long id, String nome, String senha, String email, Tipo tipo) {
 

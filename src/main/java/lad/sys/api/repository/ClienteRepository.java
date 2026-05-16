@@ -1,12 +1,9 @@
-package lad.sys.api.domain.cliente;
+package lad.sys.api.repository;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.groups.Default;
+import lad.sys.api.model.Cliente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface ClienteRepository  extends JpaRepository<Cliente, Long> {
     Page<Cliente> findAllByDeletadoFalse(Pageable pageable);

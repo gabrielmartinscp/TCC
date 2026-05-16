@@ -1,6 +1,6 @@
-package lad.sys.api.domain.usuario;
+package lad.sys.api.service;
 
-import org.jspecify.annotations.NonNull;
+import lad.sys.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
