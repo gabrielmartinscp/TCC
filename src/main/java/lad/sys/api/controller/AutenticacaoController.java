@@ -1,8 +1,8 @@
 package lad.sys.api.controller;
 
 import jakarta.validation.Valid;
-import lad.sys.api.domain.usuario.DadosAutenticacao;
-import lad.sys.api.domain.usuario.Usuario;
+import lad.sys.api.dto.usuario.DadosAutenticacao;
+import lad.sys.api.model.Usuario;
 import lad.sys.api.infra.security.DadosTokenJWT;
 import lad.sys.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;

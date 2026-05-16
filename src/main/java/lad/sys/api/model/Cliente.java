@@ -1,7 +1,9 @@
-package lad.sys.api.domain.cliente;
+package lad.sys.api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import lad.sys.api.dto.cliente.DadosAtualizacaoCliente;
+import lad.sys.api.dto.cliente.DadosCadastroCliente;
 import lombok.*;
 
 @Table(name = "clientes")

@@ -1,7 +1,9 @@
-package lad.sys.api.domain.usuario;
+package lad.sys.api.model;
 
 
 import jakarta.persistence.*;
+import lad.sys.api.dto.usuario.DadosCadastroUsuario;
+import lad.sys.api.dto.usuario.Tipo;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
