@@ -25,7 +25,6 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
-    //AAAAAAAAAAAAAAAAAAAAAA DESGRAÇAAAA
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
