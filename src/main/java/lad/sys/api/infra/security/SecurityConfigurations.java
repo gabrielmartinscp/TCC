@@ -23,27 +23,19 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        try {
-            return http
-                    .csrf(csrf -> csrf.disable()).
-                    sessionManagement(session -> session
-                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .authorizeHttpRequests(authorize -> authorize
-                            .requestMatchers(HttpMethod.POST, "/login", "/cadastro").permitAll()
-                            .anyRequest().authenticated()).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-                    .build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return http
+                .csrf(csrf -> csrf.disable()).
+                sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST,"/login", "/cadastro").permitAll()
+                        .anyRequest().authenticated()).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        try {
-            return configuration.getAuthenticationManager();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
