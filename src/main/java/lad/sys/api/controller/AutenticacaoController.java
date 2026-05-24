@@ -28,7 +28,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
+    public ResponseEntity<Object> efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
 
         System.out.println("Tentativa de login: " + dados.email());
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
