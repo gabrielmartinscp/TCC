@@ -7,6 +7,7 @@ import lad.sys.api.dto.projeto.DadosCadastroProjeto;
 import lad.sys.api.dto.projeto.DadosListagemProjeto;
 import lad.sys.api.dto.projeto.DadosProjeto;
 import lad.sys.api.model.Projeto;
+import lad.sys.api.repository.ClienteRepository;
 import lad.sys.api.repository.ProjetoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,9 @@ public class ProjetoController {
 
     @Autowired
     ProjetoRepository repository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemProjeto>> listar(@PageableDefault(size = 5, sort = {"nome"}) Pageable pageable) {
@@ -41,10 +45,16 @@ public class ProjetoController {
     @PostMapping
     @Transactional
     public ResponseEntity<Object> post(@RequestBody @Valid DadosCadastroProjeto dados, UriComponentsBuilder uriBuilder){
+
+        if (!clienteRepository.existsById(dados.id_cliente())) {
+            return ResponseEntity.badRequest()
+                    .body("Cliente com ID " + dados.id_cliente() + " não encontrado");
+        }
+
         var projeto = new Projeto(dados);
         repository.save(projeto);
 
-        var uri = uriBuilder.path("/projeto/{id}").buildAndExpand(projeto.getId_projeto()).toUri();
+        var uri = uriBuilder.path("/projeto/{id}").buildAndExpand(projeto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosProjeto(projeto));
     }
