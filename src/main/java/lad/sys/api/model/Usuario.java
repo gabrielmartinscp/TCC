@@ -30,11 +30,11 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
-    public Usuario(DadosCadastroUsuario usuario) {
+    public Usuario(DadosCadastroUsuario usuario, String senha) {
         this.id = null;
         this.nome = usuario.nome();
         this.email = usuario.email();
-        this.senha = usuario.senha();
+        this.senha = senha;
         this.tipo = usuario.tipo();
     }
 
