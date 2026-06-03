@@ -10,12 +10,12 @@ import java.time.LocalDate;
 
 public record DadosAtualizacaoProjeto(
         @NotNull
-        Long id,
+        Integer id,
 
         @Size(min = 3, max = 120)
         String nome,
 
-        Long clienteId,
+        Integer clienteId,
 
         Boolean ativo,
 
@@ -23,6 +23,12 @@ public record DadosAtualizacaoProjeto(
         BigDecimal orcamento,
 
         @PastOrPresent
-        LocalDate dataInicio
+        LocalDate dataInicio,
+
+        String tipoObra,
+
+        String descricao,
+
+        LocalDate dataFim
 ) {
 }

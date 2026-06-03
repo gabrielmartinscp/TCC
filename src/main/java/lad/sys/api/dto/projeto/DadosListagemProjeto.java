@@ -2,16 +2,15 @@ package lad.sys.api.dto.projeto;
 
 import lad.sys.api.model.Projeto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DadosListagemProjeto(
-        Long id,
+        Integer id,
         String nome,
         String nomeCliente,
         Boolean ativo,
-        BigDecimal orcamento,
         LocalDate dataInicio,
+        LocalDate dataFim,
         Integer quantidadeUsuariosComAcesso
 ) {
 
@@ -21,8 +20,8 @@ public record DadosListagemProjeto(
                 projeto.getNome(),
                 projeto.getCliente() != null ? projeto.getCliente().getNome() : null,
                 projeto.getAtivo(),
-                projeto.getOrcamento(),
                 projeto.getDataInicio(),
+                projeto.getDataFim(),
                 projeto.getUsuariosComAcesso() != null ? projeto.getUsuariosComAcesso().size() : 0
         );
     }

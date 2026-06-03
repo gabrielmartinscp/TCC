@@ -10,22 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.math.BigDecimal;
-import java.util.Comparator;
 
 @Table(name = "projeto")
-=======
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
-@Table(name = "projetos")
->>>>>>> f063022327822d5dc8e6a797c18e5635a7f6de54
 @Entity(name = "projeto")
 @Getter
 @Setter
@@ -36,99 +25,64 @@ public class Projeto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-    package lad.sys.api.model;
+    @Column(name = "id_projeto")
+    private Integer id;
 
-    import jakarta.persistence.*;
-    import jakarta.validation.Valid;
-    import lad.sys.api.dto.projeto.DadosAtualizacaoProjeto;
-    import lad.sys.api.dto.projeto.DadosCadastroProjeto;
-    import lombok.AllArgsConstructor;
-    import lombok.EqualsAndHashCode;
-    import lombok.Getter;
-    import lombok.NoArgsConstructor;
-    import lombok.Setter;
+    private String nome;
 
-    import java.math.BigDecimal;
-    import java.time.LocalDate;
-    import java.util.HashSet;
-    import java.util.Set;
-    import java.util.Comparator;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 
-    @Table(name = "projeto")
-    @Entity(name = "projeto")
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @EqualsAndHashCode(of = "id")
-    public class Projeto {
+    private Boolean ativo;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id_projeto")
-        private Long id;
+    @Column(name = "tipo_obra", length = 100)
+    private String tipoObra;
 
-        private String nome;
+    @Column(name = "descricao", columnDefinition = "TEXT")
+    private String descricao;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "cliente_id", nullable = false)
-        private Cliente cliente;
+    @Column(name = "data_inicio")
+    private LocalDate dataInicio;
 
-        private Boolean ativo;
+    @Column(name = "data_fim")
+    private LocalDate dataFim;
 
-        @Column(name = "tipo_obra")
-        private String tipoObra;
+    @ManyToMany
+    @JoinTable(
+            name = "projetos_usuarios",
+            joinColumns = @JoinColumn(name = "projeto_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private Set<Usuario> usuariosComAcesso = new HashSet<>();
 
-        @Column(columnDefinition = "TEXT")
-        private String descricao;
-
-        @Column(name = "data_inicio")
-        private LocalDate dataInicio;
-
-        @Column(name = "data_fim")
-        private LocalDate dataFim;
-
-        @ManyToMany
-        @JoinTable(
-                name = "projetos_usuarios",
-                joinColumns = @JoinColumn(name = "projeto_id"),
-                inverseJoinColumns = @JoinColumn(name = "usuario_id")
-        )
-        private Set<Usuario> usuariosComAcesso = new HashSet<>();
-
-        @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
-        private Set<Orcamento> orcamentos = new HashSet<>();
-
-        public Projeto(DadosCadastroProjeto dados, Cliente cliente) {
-            this.id = null;
-            this.nome = dados.nome();
-            this.cliente = cliente;
-            this.ativo = dados.ativo();
-            this.dataInicio = dados.dataInicio();
-            this.usuariosComAcesso = new HashSet<>();
-        }
-
-        public void atualizarRegistro(@Valid DadosAtualizacaoProjeto dados, Cliente cliente) {
-            this.nome = dados.nome() != null ? dados.nome() : this.nome;
-            this.cliente = cliente != null ? cliente : this.cliente;
-            this.ativo = dados.ativo() != null ? dados.ativo() : this.ativo;
-            this.dataInicio = dados.dataInicio() != null ? dados.dataInicio() : this.dataInicio;
-        }
-
-        public void adicionarAcesso(Usuario usuario) {
-            this.usuariosComAcesso.add(usuario);
-        }
-
-        public void removerAcesso(Usuario usuario) {
-            this.usuariosComAcesso.remove(usuario);
-        }
-
-        public BigDecimal getOrcamento() {
-            return orcamentos.stream()
-                    .filter(o -> o.getValorFinal() != null || o.getCustoTotal() != null)
-                    .max(Comparator.comparing(Orcamento::getDataCriacao, Comparator.nullsLast(Comparator.naturalOrder())))
-                    .map(o -> o.getValorFinal() != null ? o.getValorFinal() : o.getCustoTotal())
-                    .orElse(null);
-        }
+    public Projeto(DadosCadastroProjeto dados, Cliente cliente) {
+        this.id = null;
+        this.nome = dados.nome();
+        this.cliente = cliente;
+        this.ativo = dados.ativo();
+        this.tipoObra = dados.tipoObra();
+        this.descricao = dados.descricao();
+        this.dataInicio = dados.dataInicio();
+        this.dataFim = dados.dataFim();
+        this.usuariosComAcesso = new HashSet<>();
     }
+
+    public void atualizarRegistro(@Valid DadosAtualizacaoProjeto dados, Cliente cliente) {
+        this.nome = dados.nome() != null ? dados.nome() : this.nome;
+        this.cliente = cliente != null ? cliente : this.cliente;
+        this.ativo = dados.ativo() != null ? dados.ativo() : this.ativo;
+        this.tipoObra = dados.tipoObra() != null ? dados.tipoObra() : this.tipoObra;
+        this.descricao = dados.descricao() != null ? dados.descricao() : this.descricao;
+        this.dataInicio = dados.dataInicio() != null ? dados.dataInicio() : this.dataInicio;
+        this.dataFim = dados.dataFim() != null ? dados.dataFim() : this.dataFim;
+    }
+
+    public void adicionarAcesso(Usuario usuario) {
+        this.usuariosComAcesso.add(usuario);
+    }
+
+    public void removerAcesso(Usuario usuario) {
+        this.usuariosComAcesso.remove(usuario);
+    }
+}

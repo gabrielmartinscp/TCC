@@ -22,14 +22,14 @@ public class Orcamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orcamento")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_projeto", nullable = false)
     private Projeto projeto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = true)
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
     @Column(name = "data_criacao")
@@ -46,4 +46,6 @@ public class Orcamento {
 
     @Column(name = "impostos", precision = 5, scale = 2)
     private BigDecimal impostos;
+
+    // Lombok fornece construtores
 }

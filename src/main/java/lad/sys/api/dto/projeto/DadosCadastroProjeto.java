@@ -15,17 +15,22 @@ public record DadosCadastroProjeto(
         String nome,
 
         @NotNull
-        Long clienteId,
+        Integer clienteId,
 
         @NotNull
         Boolean ativo,
 
-        @NotNull
         @PositiveOrZero
         BigDecimal orcamento,
 
         @NotNull
         @PastOrPresent
-        LocalDate dataInicio
+        LocalDate dataInicio,
+
+        String tipoObra,
+
+        String descricao,
+
+        LocalDate dataFim
 ) {
 }
