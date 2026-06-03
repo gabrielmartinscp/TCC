@@ -20,13 +20,15 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE fornecedor (
-    id_fornecedor INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
-    contato VARCHAR(150)
+    email VARCHAR(150),
+    telefone VARCHAR(30),
+    deletado BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE insumo (
-    id_insumo INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     unidade VARCHAR(50),
     preco_atual DECIMAL(10,2),
@@ -34,7 +36,7 @@ CREATE TABLE insumo (
 
     CONSTRAINT fk_insumo_fornecedor
         FOREIGN KEY (id_fornecedor)
-        REFERENCES fornecedor(id_fornecedor)
+        REFERENCES fornecedor(id)
         ON DELETE SET NULL
 );
 
